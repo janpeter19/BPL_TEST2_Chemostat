@@ -33,6 +33,7 @@
 #--------------------------------------------------------------------------------------
 # 2022-04-08 - Updated for BPL ver 2.0.7 and FMU_explore 0.9.0
 # 2022-04-20 - Added a new plot
+# 2022-05-29 - Updated to FMU-explore 0.9.1 - describe_general() to handle boolean parameters
 #--------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -418,7 +419,7 @@ def describe(name, decimals=3):
 
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore ver 0.9.0'
+FMU_explore = 'FMU-explore ver 0.9.1'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -430,7 +431,7 @@ def par(parDict=parDict, parLocation=parLocation, *x, **x_kwarg):
       if key in parDict.keys():
          x_temp.update({key: x_kwarg[key]})
       else:
-         print(key, 'seems not an accessible parameter')
+         print('Error:', key, '- seems not an accessible parameter - check the spelling')
    parDict.update(x_temp)
 
 # Define function init() for initial values update
@@ -443,7 +444,7 @@ def init(parDict=parDict, *x, **x_kwarg):
       if '_0' in key: 
          x_init.update({key: x_kwarg[key]})
       else:
-         print(key, 'seems not an initial value, use par() instead')
+         print('Error:', key, '- seems not an initial value, use par() instead - check the spelling')
    parDict.update(x_init)
    
 # Define function disp() for display of initial values and parameters
@@ -460,25 +461,32 @@ def disp(name='', decimals=3, mode='short'):
       k = 0
       for Location in parLocation.values():
          if name in Location:
-            print(dict_reverser(parLocation)[Location] , ':', np.round(model.get(Location)[0],decimals))
+            if type(model.get(Location)[0]) != np.bool_:
+               print(dict_reverser(parLocation)[Location] , ':', np.round(model.get(Location)[0],decimals))
+            else:
+               print(dict_reverser(parLocation)[Location] , ':', model.get(Location)[0])               
          else:
             k = k+1
       if k == len(parLocation):
          for parName in parDict.keys():
             if name in parName:
-               print(parName,':', np.round(model.get(parLocation[parName])[0],decimals))
-
+               if type(model.get(Location)[0]) != np.bool_:
+                  print(parName,':', np.round(model.get(parLocation[parName])[0],decimals))
+               else: 
+                  print(parName,':', model.get(parLocation[parName])[0])
    if mode in ['long','location']:
       k = 0
       for Location in parLocation.values():
          if name in Location:
-            print(Location,':', dict_reverser(parLocation)[Location] , ':', np.round(model.get(Location)[0],decimals))
+            if type(model.get(Location)[0]) != np.bool_:       
+               print(Location,':', dict_reverser(parLocation)[Location] , ':', np.round(model.get(Location)[0],decimals))
          else:
             k = k+1
       if k == len(parLocation):
          for parName in parDict.keys():
             if name in parName:
-               print(parLocation[parName], ':', dict_reverser(parLocation)[Location], ':', parName,':', 
+               if type(model.get(Location)[0]) != np.bool_:
+                  print(parLocation[parName], ':', dict_reverser(parLocation)[Location], ':', parName,':', 
                      np.round(model.get(parLocation[parName])[0],decimals))
 
 # Line types
@@ -496,7 +504,7 @@ def show(diagrams=diagrams):
    for command in diagrams: eval(command)
 
 # Simulation
-def simu(simulationTimeLocal=simulationTime, mode='Initial', diagrams=diagrams, timeDiscreteStates=timeDiscreteStates):
+def simu(simulationTimeLocal=simulationTime, mode='Initial', diagrams=diagrams,timeDiscreteStates=timeDiscreteStates):
    """Model loaded and given intial values and parameter before,
       and plot window also setup before."""
     
@@ -618,9 +626,12 @@ def describe_general(name, decimals):
       except FMUException:
          unit =''
       if unit =='':
-         print(description, np.round(value, decimals))
+         if type(value) != np.bool_:
+            print(description, ':', np.round(value, decimals))
+         else:
+            print(description, ':', value)            
       else:
-        print(description, np.round(value, decimals), '[',unit,']')
+        print(description, ':', np.round(value, decimals), '[',unit,']')
                   
    else:
       description = model.get_variable_description(name)
@@ -630,9 +641,12 @@ def describe_general(name, decimals):
       except FMUException:
          unit =''
       if unit =='':
-         print(description, np.round(value, decimals))
+         if type(value) != np.bool_:
+            print(description, ':', np.round(value, decimals))
+         else:
+            print(description, ':', value)     
       else:
-         print(description, np.round(value, decimals), '[',unit,']')
+         print(description, ':', np.round(value, decimals), '[',unit,']')
          
 # Describe framework
 def BPL_info():
