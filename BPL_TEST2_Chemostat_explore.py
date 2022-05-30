@@ -35,6 +35,7 @@
 # 2022-04-20 - Added a new plot
 # 2022-05-29 - Updated to FMU-explore 0.9.1 - describe_general() to handle boolean parameters
 # 2022-05-30 - Introduced legends for ax3
+# 2022-05-30 - Updated describe() with handling of cstrProdMax doc-string
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -416,7 +417,10 @@ def describe(name, decimals=3):
   
    elif name in ['parts']:
       describe_parts(component_list_minimum)
-
+      
+   elif name in ['cstrProdMax']:
+      print(cstrProdMax.__doc__,':',cstrProdMax(model), '[ g/h ]')
+      
    else:
       describe_general(name, decimals)
 
