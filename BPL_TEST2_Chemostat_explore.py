@@ -2,7 +2,7 @@
 #          with functions added to facilitate explorative simulation work
 #
 # Author: Jan Peter Axelsson
-# -------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
 # 2020-01-28 - Use Docker JModelica 2.4 compiled FMU and run in Python3 with PyFMI
 #            - Import platform and locale (for later use with OpenModelica FMU)
 #            - Fix print() 
@@ -17,24 +17,25 @@
 # 2020-02-12 - Tested with JModelica 2.14 and seems ok
 # 2020-03-05 - Updated name for FMU
 # 2020-03-16 - Indluced in system_info() information if FMU is ME or CS
-#--------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
 # 2020-05-02 - Adapt for Jupyter
 #            - Change name and type of FMU
 #            - Suppress printing of run time statistics - opts
 #            - Suppress plt.show in simu()
 # 2020-05-10 - Corrected plot of phaseplane in simu()
 # 2020-07-01 - Updated opts for Windows to make it silent
-#--------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
 # 2021-05-08 - Adapted for BPL ver 2.0.5 and updated BPL interface
 # 2021-05-19 - Default value given for disp()
 # 2021-05-21 - Adapted for Linux also 
 # 2021-05-25 - Change to parDict and parLocation and use par() for parDict.update()
 # 2021-06-05 - Updated init() to handle also strings
-#--------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------
 # 2022-04-08 - Updated for BPL ver 2.0.7 and FMU_explore 0.9.0
 # 2022-04-20 - Added a new plot
 # 2022-05-29 - Updated to FMU-explore 0.9.1 - describe_general() to handle boolean parameters
-#--------------------------------------------------------------------------------------
+# 2022-05-30 - Introduced legends for ax3
+#------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
 #  Framework
@@ -187,6 +188,7 @@ def newplot(title='Chemostat cultivation', plotType='TimeSeries'):
       diagrams.append("ax2.plot(t,sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)")   
       diagrams.append("ax3.plot(t,sim_res['bioreactor.inlet[1].F']*sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)") 
       diagrams.append("ax3.plot([0, simulationTime], [cstrProdMax(model), cstrProdMax(model)], color='r',linestyle=linetype)")
+      diagrams.append("ax3.legend(['FX','FX_max'])")   
       diagrams.append("ax4.plot(t,sim_res['D'],color='b',linestyle=linetype)") 
       diagrams.append("ax4.plot(t,sim_res['bioreactor.culture.q[1]'],color='r',linestyle=linetype)") 
       diagrams.append("ax4.legend(['D','mu'])")    
@@ -225,7 +227,7 @@ def newplot(title='Chemostat cultivation', plotType='TimeSeries'):
       diagrams.append("ax3.plot(t,sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)")   
       diagrams.append("ax4.plot(t,sim_res['bioreactor.inlet[1].F']*sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)") 
       diagrams.append("ax4.plot([0, simulationTime], [cstrProdMax(model), cstrProdMax(model)], color='r',linestyle=linetype)")
-      diagrams.append("ax4.legend(['F*X','max F*X'])")    
+      diagrams.append("ax4.legend(['FX','FX_max'])")    
       diagrams.append("ax5.plot(t,sim_res['D'],color='b',linestyle=linetype)") 
       diagrams.append("ax5.plot(t,sim_res['bioreactor.culture.q[1]'],color='r',linestyle=linetype)") 
       diagrams.append("ax5.legend(['D','mu'])")    
@@ -268,6 +270,7 @@ def newplot(title='Chemostat cultivation', plotType='TimeSeries'):
       diagrams.append("ax21.plot(t,sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)")   
       diagrams.append("ax31.plot(t,sim_res['bioreactor.inlet[1].F']*sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)") 
       diagrams.append("ax31.plot([0, simulationTime], [cstrProdMax(model), cstrProdMax(model)], color='r',linestyle=linetype)")
+      diagrams.append("ax31.legend(['FX','FX_max'])")   
       diagrams.append("ax41.plot(t,sim_res['D'],color='b',linestyle=linetype)") 
       diagrams.append("ax41.plot(t,sim_res['bioreactor.culture.q[1]'],color='r',linestyle=linetype)") 
       diagrams.append("ax41.legend(['D','mu'])") 
