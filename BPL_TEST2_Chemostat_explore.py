@@ -419,7 +419,7 @@ def describe(name, decimals=3):
       describe_parts(component_list_minimum)
       
    elif name in ['cstrProdMax']:
-      print(cstrProdMax.__doc__,':',cstrProdMax(model), '[ g/h ]')
+      print(cstrProdMax.__doc__ ,':',cstrProdMax(model), '[ g/h ]')
       
    else:
       describe_general(name, decimals)
