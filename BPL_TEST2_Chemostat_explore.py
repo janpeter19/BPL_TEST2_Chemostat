@@ -1,7 +1,8 @@
 # Figure - Simulation of chemostat reactor
 #          with functions added to facilitate explorative simulation work
 #
-# Author: Jan Peter Axelsson
+# GNU General Public License v3.0
+# Copyright (c) 2022, Jan Peter Axelsson, All rights reserved.
 #------------------------------------------------------------------------------------------------------------------
 # 2020-01-28 - Use Docker JModelica 2.4 compiled FMU and run in Python3 with PyFMI
 #            - Import platform and locale (for later use with OpenModelica FMU)
