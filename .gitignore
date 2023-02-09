@@ -3,3 +3,5 @@
 BPL_TEST2_Chemostat_windows_jm_cs.fmu
 .ipynb_checkpoints/BPL_TESET2_Chemostat-checkpoint.ipynb
 BPL_TEST2_Chemostat_colab_me.pdf
+*.txt
+*.mat
