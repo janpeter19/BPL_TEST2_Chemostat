@@ -59,7 +59,7 @@ elif platform.system() == 'Linux':
       print('Linux - run FMU pre-compiled OpenModelica 1.21.0') 
       if flag_type in ['CS','cs']:         
          fmu_model ='BPL_TEST2_Chemostat_linux_om_cs.fmu'    
-      model_description = read_model_description(fmu_model)  
+         model_description = read_model_description(fmu_model)  
       if flag_type in ['ME','me']:         
          fmu_model ='BPL_TEST2_Chemostat_linux_om_me.fmu'    
          model_description = read_model_description(fmu_model)  
