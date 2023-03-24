@@ -12,6 +12,7 @@
 # 2023-02-28 - Place the list key_variables better
 # 2023-03-21 - Update FMU-explore for FMPy 0.9.7b and ensured all states logged by using key_variables for now
 # 2023-03-23 - Update FMU-explore 0.9.7c
+# 2023-03-24 - Corrected describe('cstrProdMax') 
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -460,7 +461,7 @@ def describe(name, decimals=3):
       describe_MSL()
       
    elif name in ['cstrProdMax']:
-      print(cstrProdMax.__doc__ ,':',cstrProdMax(model), '[ g/h ]')
+      print(cstrProdMax.__doc__ ,':',cstrProdMax(), '[ g/h ]')
       
    else:
       describe_general(name, decimals)
