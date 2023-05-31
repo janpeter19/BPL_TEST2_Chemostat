@@ -59,7 +59,7 @@ import matplotlib.pyplot as plt
 from pyfmi import load_fmu
 from pyfmi.fmi import FMUException
 from itertools import cycle
-from importlib_metadata import version   # included in future Python 3.8
+#from importlib_metadata import version   # included in future Python 3.8
 
 # Set the environment - for Linux a JSON-file in the FMU is read
 if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
