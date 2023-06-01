@@ -44,7 +44,7 @@
 # 2023-03-21 - Clean-up
 # 2023-03-28 - Update FMU-explore 0.9.7
 # 2023-04-20 - Compiled for Ubuntu 20.04 and changed BPL_version
-# 2023-05-31 - Adjusted to from importlib.meetadata import version
+# 2023-05-31 - Adjusted to from importlib.metadata import version
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -482,7 +482,7 @@ def describe(name, decimals=3):
 
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore version 0.9.8'
+FMU_explore = 'FMU-explore version 0.9.7'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
