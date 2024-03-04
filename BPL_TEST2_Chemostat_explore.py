@@ -46,6 +46,7 @@
 # 2023-04-20 - Compiled for Ubuntu 20.04 and changed BPL_version
 # 2023-05-31 - Adjusted to from importlib.metadata import version
 # 2023-09-11 - Updated to FMU-explore 0.9.8 and introduced proces diagram
+# 2024-03-04 - Update FMU-explore 0.9.9 - now with _0 replaced with _start everywhere
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -146,16 +147,16 @@ stateDict.update(timeDiscreteStates)
 
 # Create dictionaries parDict and parLocation
 global parDict; parDict = {}
-parDict['V_0'] = 1.0
-parDict['VX_0'] = 1.0
-parDict['VS_0'] = 30.0
+parDict['V_start'] = 1.0
+parDict['VX_start'] = 1.0
+parDict['VS_start'] = 30.0
 
 parDict['Y'] = 0.5
 parDict['qSmax'] = 0.75
 parDict['Ks'] = 0.1
 
 parDict['S_in'] = 30.0
-parDict['feedtank.V_0'] = 100.0
+parDict['feedtank.V_start'] = 100.0
 
 parDict['t0'] = 0.0
 parDict['F0'] = 0.0
@@ -167,16 +168,16 @@ parDict['t3'] = 1000.0
 parDict['F3'] = 0.20
 
 global parLocation; parLocation = {}
-parLocation['V_0'] = 'bioreactor.V_0'
-parLocation['VX_0'] = 'bioreactor.m_0[1]' 
-parLocation['VS_0'] = 'bioreactor.m_0[2]' 
+parLocation['V_start'] = 'bioreactor.V_start'
+parLocation['VX_start'] = 'bioreactor.m_start[1]' 
+parLocation['VS_start'] = 'bioreactor.m_start[2]' 
 
 parLocation['Y'] = 'bioreactor.culture.Y'
 parLocation['qSmax'] = 'bioreactor.culture.qSmax'
 parLocation['Ks'] = 'bioreactor.culture.Ks'
 
 parLocation['S_in'] = 'feedtank.c_in[2]'
-parLocation['feedtank.V_0'] = 'feedtank.V_0'
+parLocation['feedtank.V_start'] = 'feedtank.V_start'
 parLocation['t0'] = 'dosagescheme.table[1,1]'
 parLocation['F0'] = 'dosagescheme.table[1,2]'
 parLocation['t1'] = 'dosagescheme.table[2,1]'
@@ -194,8 +195,8 @@ global parCheck; parCheck = []
 parCheck.append("parDict['Y'] > 0")
 parCheck.append("parDict['qSmax'] > 0")
 parCheck.append("parDict['Ks'] > 0")
-parCheck.append("parDict['V_0'] > 0")
-parCheck.append("parDict['VX_0'] >= 0")
+parCheck.append("parDict['V_start'] > 0")
+parCheck.append("parDict['VX_start'] >= 0")
 parCheck.append("parDict['t0'] < parDict['t1']")
 parCheck.append("parDict['t1'] < parDict['t2']")
 parCheck.append("parDict['t2'] < parDict['t3']")
@@ -446,7 +447,7 @@ def cstrProdMax(model):
         
    X_max = model.get('bioreactor.culture.Y')*model.get('feedtank.c_in[2]')
    mu_max = model.get('bioreactor.culture.Y')*model.get('bioreactor.culture.qSmax')
-   V_nom = model.get('bioreactor.V_0')
+   V_nom = model.get('bioreactor.V_start')
    FX_max = mu_max*X_max*V_nom    
     
    return FX_max[0]
@@ -488,7 +489,7 @@ def describe(name, decimals=3):
 
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore version 0.9.8'
+FMU_explore = 'FMU-explore version 0.9.9'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -510,12 +511,12 @@ def par(parDict=parDict, parCheck=parCheck, parLocation=parLocation, *x, **x_kwa
 
 # Define function init() for initial values update
 def init(parDict=parDict, *x, **x_kwarg):
-   """ Set initial values and the name should contain string '_0' to be accepted.
+   """ Set initial values and the name should contain string '_start' to be accepted.
        The function can handle general parameter string location names if entered as a dictionary. """
    x_kwarg.update(*x)
    x_init={}
    for key in x_kwarg.keys():
-      if '_0' in key: 
+      if '_start' in key: 
          x_init.update({key: x_kwarg[key]})
       else:
          print('Error:', key, '- seems not an initial value, use par() instead - check the spelling')
@@ -578,8 +579,10 @@ def show(diagrams=diagrams):
    for command in diagrams: eval(command)
 
 # Simulation
-def simu(simulationTimeLocal=simulationTime, mode='Initial', options=opts_std, diagrams=diagrams):         
-   """Model loaded and given intial values and parameter before, and plot window also setup before."""
+def simu(simulationTimeLocal=simulationTime, mode='Initial', options=opts_std, \
+         diagrams=diagrams,timeDiscreteStates=timeDiscreteStates):         
+   """Model loaded and given intial values and parameter before,
+      and plot window also setup before."""
     
    # Global variables
    global model, parDict, stateDict, prevFinalTime, simulationTime, sim_res, t
@@ -624,17 +627,17 @@ def simu(simulationTimeLocal=simulationTime, mode='Initial', options=opts_std, d
          for key in stateDict.keys():
             if not key[-1] == ']':
                if key[-3:] == 'I.y': 
-                  model.set(key[:-10]+'I_0', stateDict[key]) 
+                  model.set(key[:-10]+'I_start', stateDict[key]) 
                elif key[-3:] == 'D.x': 
-                  model.set(key[:-10]+'D_0', stateDict[key]) 
+                  model.set(key[:-10]+'D_start', stateDict[key]) 
                else:
-                  model.set(key+'_0', stateDict[key])
+                  model.set(key+'_start', stateDict[key])
             elif key[-3] == '[':
-               model.set(key[:-3]+'_0'+key[-3:], stateDict[key]) 
+               model.set(key[:-3]+'_start'+key[-3:], stateDict[key]) 
             elif key[-4] == '[':
-               model.set(key[:-4]+'_0'+key[-4:], stateDict[key]) 
+               model.set(key[:-4]+'_start'+key[-4:], stateDict[key]) 
             elif key[-5] == '[':
-               model.set(key[:-5]+'_0'+key[-5:], stateDict[key]) 
+               model.set(key[:-5]+'_start'+key[-5:], stateDict[key]) 
             else:
                print('The state vecotr has more than 1000 states')
                break
@@ -736,7 +739,7 @@ def describe_general(name, decimals):
             print(description, ':', value)     
       else:
          print(description, ':', np.round(value, decimals), '[',unit,']')
-
+         
 # Plot process diagram
 def process_diagram(fmu_model=fmu_model, fmu_process_diagram=fmu_process_diagram):   
    try:
