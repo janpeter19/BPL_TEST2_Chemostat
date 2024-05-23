@@ -95,7 +95,7 @@ elif platform.system() == 'Linux':
          model = load_fmu(fmu_model, log_level=0) 
       if flag_type in ['ME','me']:         
          fmu_model ='BPL_TEST2_Chemostat_linux_om_me.fmu'    
-         model = load_fmu(fmu_model, log_level=0)
+         model = load_fmu(fmu_model, log_level=7)
    else:    
       print('There is no FMU for this platform')
 
