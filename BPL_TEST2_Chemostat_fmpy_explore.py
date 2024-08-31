@@ -22,6 +22,7 @@
 # 2024-05-20 - Updated the OpenModelica version to 1.23.0-dev
 # 2024-06-01 - Corrected model_get() to handle string values as well - improvement very small and keep ver 1.0.0
 # 2024-08-13 - Corrected model_get() to also handle constants like column.n - call it FMU-explore for FMPy 1.0.1
+# 2024-08-31 - Changed dosagescheme to schemePumps
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -172,14 +173,14 @@ parLocation['Ks'] = 'bioreactor.culture.Ks'
 
 parLocation['S_in'] = 'feedtank.c_in[2]'
 parLocation['feedtank.V_start'] = 'feedtank.V_start'
-parLocation['t0'] = 'dosagescheme.table[1,1]'
-parLocation['F0'] = 'dosagescheme.table[1,2]'
-parLocation['t1'] = 'dosagescheme.table[2,1]'
-parLocation['F1'] = 'dosagescheme.table[2,2]'
-parLocation['t2'] = 'dosagescheme.table[3,1]'
-parLocation['F2'] = 'dosagescheme.table[3,2]'
-parLocation['t3'] = 'dosagescheme.table[4,1]'
-parLocation['F3'] = 'dosagescheme.table[4,2]'
+parLocation['t0'] = 'schemePumps.table[1,1]'
+parLocation['F0'] = 'schemePumps.table[1,2]'
+parLocation['t1'] = 'schemePumps.table[2,1]'
+parLocation['F1'] = 'schemePumps.table[2,2]'
+parLocation['t2'] = 'schemePumps.table[3,1]'
+parLocation['F2'] = 'schemePumps.table[3,2]'
+parLocation['t3'] = 'schemePumps.table[4,1]'
+parLocation['F3'] = 'schemePumps.table[4,2]'
 
 # Extra only for describe()
 global key_variables; key_variables = []
