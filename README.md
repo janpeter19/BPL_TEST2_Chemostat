@@ -11,11 +11,6 @@ or alternatively (experimentally)
 [start BPL notebook with FMPy](https://github.com/janpeter19/BPL_TEST2_Chemostat/blob/main/BPL_TEST2_Chemostat_fmpy_colab.ipynb).
 Then you in the menu choose Runtime/Run all. If you have chosen the altarnative with FMPy click first on the symbol Open in Colab.
 
-Also include a notebook that demonstrate an error in OpenModelica FMU and avaialble here a short time.
-[start BPL notebook including error](https://colab.research.google.com/github/janpeter19/BPL_TEST2_Chemostat/blob/main/BPL_TEST2_Chemostat_colab_error.ipynb)
-
-Then you in the menu choose Runtime/Run all.
-
 The installation takes just a few minutes. The subsequent execution of the simulations of microbial growth take just a second or so. You can continue in the notebook and make new simulations and follow the examples given.
 
 Note that:
