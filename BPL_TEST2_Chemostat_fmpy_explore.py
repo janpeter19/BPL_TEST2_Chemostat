@@ -28,6 +28,7 @@
 # 2025-06-12 - Test MSL 4.1.0 with OpenModelica genreated FMU
 # 2025-07-28 - Update BPL 2.3.1
 # 2025-11-08 - FMU-explore 1.0.2
+# 2025-11-16 - FMU-explore 1.0.2 corrected
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -58,7 +59,6 @@ if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 #------------------------------------------------------------------------------------------------------------------
 
 # Provde the right FMU and load for different platforms in user dialogue:
-global model_description
 if platform.system() == 'Windows':
    print('Windows - run FMU pre-compiled JModelica 2.14')
    fmu_model ='BPL_TEST2_Chemostat_windows_jm_cs.fmu' 
@@ -81,9 +81,9 @@ elif platform.system() == 'Linux':
 
 # Provide various opts-profiles
 if flag_type in ['CS', 'cs']:
-   opts_std = {'ncp': 500}
+   opts_std = {'NCP': 500}
 elif flag_type in ['ME', 'me']:
-   opts_std = {'ncp': 500}
+   opts_std = {'NCP': 500}
 else:    
    print('There is no FMU for this platform')
   
@@ -101,7 +101,8 @@ else:
    print('There is no FMU for this platform')
 
 # Simulation time
-global simulationTime; simulationTime = 60.0
+simulationTime = 60.0
+prevFinalTime = 0
 
 # Dictionary of time discrete states
 timeDiscreteStates = {} 
@@ -188,9 +189,9 @@ parLocation['t3'] = 'schemePumps.table[4,1]'
 parLocation['F3'] = 'schemePumps.table[4,2]'
 
 # Extra only for describe()
-global key_variables; key_variables = []
-parLocation['mu'] = 'bioreactor.culture.mu'; key_variables.append(parLocation['mu'])
-key_variables.append(parLocation['S_in'])
+keyVariables = []
+parLocation['mu'] = 'bioreactor.culture.mu'; keyVariables.append(parLocation['mu'])
+keyVariables.append(parLocation['S_in'])
 
 # Parameter value check 
 parCheck = []
@@ -204,7 +205,6 @@ parCheck.append("parValue['t1'] < parValue['t2']")
 parCheck.append("parValue['t2'] < parValue['t3']")
 
 # Create list of diagrams to be plotted by simu()
-global diagrams
 diagrams = []
 
 # Define standard diagrams
@@ -659,11 +659,11 @@ def simu(simulationTime=simulationTime, mode='Initial', options=opts_std, diagra
          validate = False,
          start_time = 0,
          stop_time = simulationTime,
-         output_interval = simulationTime/options['ncp'],
+         output_interval = simulationTime/options['NCP'],
          record_events = True,
          start_values = start_values,
          fmi_call_logger = None,
-         output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + key_variables))
+         output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + keyVariables))
       )
       
       simulationDone = True
@@ -695,11 +695,11 @@ def simu(simulationTime=simulationTime, mode='Initial', options=opts_std, diagra
             validate = False,
             start_time = prevFinalTime,
             stop_time = prevFinalTime + simulationTime,
-            output_interval = simulationTime/options['ncp'],
+            output_interval = simulationTime/options['NCP'],
             record_events = True,
             start_values = start_values,
             fmi_call_logger = None,
-            output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + key_variables))
+            output = list(set(extract_variables(diagrams) + list(stateValue.keys()) + keyVariables))
          )
       
          simulationDone = True
