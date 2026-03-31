@@ -30,6 +30,7 @@
 # 2025-11-08 - FMU-explore 1.0.2
 # 2025-11-16 - FMU-explore 1.0.2 corrected
 # 2025-11-19 - FMU-explore 1.0.2 corrected again parLocation() with sheets as argument
+# 2026-03-31 - FMU-explore 1.0.3
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -495,12 +496,7 @@ def describe(name, decimals=3):
 
 #------------------------------------------------------------------------------------------------------------------
 #  General code 
-FMU_explore = 'FMU-explore for FMPy version 1.0.2'
-#------------------------------------------------------------------------------------------------------------------
-
-#------------------------------------------------------------------------------------------------------------------
-#  General code 
-FMU_explore = 'FMU-explore for FMPy version 1.0.2'
+FMU_explore = 'FMU-explore for FMPy version 1.0.3'
 #------------------------------------------------------------------------------------------------------------------
 
 # Define function par() for parameter update
@@ -791,6 +787,9 @@ def describe_general(name, decimals, parLocation=parLocation):
       description = 'Time'
       unit = 'h'
       print(description,'[',unit,']')
+
+   elif name == 'process':
+      print(read_model_description(fmu_model).description)   
       
    elif name in parLocation.keys():
       description = model_get_variable_description(parLocation[name])
@@ -880,6 +879,13 @@ def system_info():
    print(' -MSL:', MSL_version)    
    print(' -Description:', BPL_version)   
    print(' -Interaction:', FMU_explore)
+   
+def SDG(explanation=False):
+  if explanation:
+    print('"Soli Deo Gloria"')
+    print(' It is latin and means "To the honour of God".') 
+    print(' The great composer Johan Sebastian Bach used to end his compositions with this small remark SDG.')
+    print(' And I like to do that too :).')    
    
 #------------------------------------------------------------------------------------------------------------------
 #  Startup
