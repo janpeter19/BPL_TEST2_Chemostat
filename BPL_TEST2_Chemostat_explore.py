@@ -22,7 +22,6 @@ def newplot(title='Chemostat cultivation', plotType='TimeSeries'):
    # Plot diagram
    if plotType == 'TimeSeries':
 
-      plt.figure()
       ax1 = plt.subplot(4,1,1)
       ax2 = plt.subplot(4,1,2)       
       ax3 = plt.subplot(4,1,3)
@@ -53,9 +52,7 @@ def newplot(title='Chemostat cultivation', plotType='TimeSeries'):
       diagrams.append("ax[0].plot(t,sim_res['bioreactor.c[2]'],color='b',linestyle=linetype)")
       diagrams.append("ax[1].plot(t,sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)")   
       diagrams.append("ax[2].plot(t,sim_res['bioreactor.inlet[1].F']*sim_res['bioreactor.c[1]'],color='b',linestyle=linetype)") 
-#      diagrams.append("ax[2].plot([0, simulationTime], [cstrProdMax(model), cstrProdMax(model)], color='r',linestyle=linetype)")
-      diagrams.append("ax[2].plot([0, simulationTime], [external_function(), external_function()], color='r',linestyle=linetype)")
-#      diagrams.append("ax[2].plot([0, simulationTime], color='r',linestyle=linetype)")
+      diagrams.append("ax[2].plot([0, simulationTime], [cstrProdMax(model), cstrProdMax(model)], color='r',linestyle=linetype)")
       diagrams.append("ax[2].legend(['FX','FX_max'])")   
       diagrams.append("ax[3].plot(t,sim_res['D'],color='b',linestyle=linetype)") 
       diagrams.append("ax[3].plot(t,sim_res['bioreactor.culture.q[1]'],color='r',linestyle=linetype)") 

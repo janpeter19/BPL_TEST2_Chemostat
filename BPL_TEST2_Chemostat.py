@@ -164,11 +164,9 @@ lines = ['-','--',':','-.']
 
 # Define maximal performance criteria
 def cstrProdMax(model=model):
-   """Calculate from the model maximal chemostat productivity FX_max"""
-        
-   X_max = model.get('bioreactor.culture.Y')*model.get('feedtank.c_in[2]')
+   """Calculate from the model maximal chemostat productivity FX_max"""        
+   X_max = model.get('bioreactor.culture.Y')*model.get('feedtank.c_in[2]')        
    mu_max = model.get('bioreactor.culture.Y')*model.get('bioreactor.culture.qSmax')
    V_nom = model.get('bioreactor.V_start')
-   FX_max = mu_max*X_max*V_nom    
-    
+   FX_max = mu_max*X_max*V_nom      
    return FX_max[0]
