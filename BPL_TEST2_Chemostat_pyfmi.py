@@ -1,8 +1,9 @@
-# setup applicateion data BPL_TEST2_Chemostat 
+# Setup applicateion data BPL_TEST2_Chemostat_pyfmi 
 # Author: Jan Peter Axelsson
 #------------------------------------------------------------------------------------------------------------------
 # 2026-08-25 - Created
 # 2026-08-25 - Added the user defined external function cstrProdMax
+# 2026-09-14 - Move definition of stateValue to the fmu_explore_pyfmi module ver 1.2.0
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
