@@ -1,4 +1,4 @@
-# setup application functions BPL_TEST2_Chemostat, dependent on previous import of functions from fmu_explore 
+# Setup application functions BPL_TEST2_Chemostat, dependent on previous import of functions from fmu_explore 
 # Author: Jan Peter Axelsson
 #------------------------------------------------------------------------------------------------------------------
 # 2026-08-25 - Created
@@ -60,7 +60,6 @@ def newplot(title='Chemostat cultivation', plotType='TimeSeries'):
    
    elif plotType == 'TimeSeries2':
 
-      plt.figure()
       ax1 = plt.subplot(5,1,1)
       ax2 = plt.subplot(5,1,2)       
       ax3 = plt.subplot(5,1,3)
