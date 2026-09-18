@@ -2,7 +2,8 @@
 # Author: Jan Peter Axelsson
 #------------------------------------------------------------------------------------------------------------------
 # 2026-09-08 - Created
-# 2026-09-12 - Move calculations around stateValue etc to the initialization of fmy:_explore_fmpy ver 1.1.8.
+# 2026-09-12 - Move calculations around stateValue etc to the initialization of fmy:_explore_fmpy ver 1.1.8
+# 2026-09-18 - Decrease the framework to what is necessary and move matlotlib to the other setup-file
 #------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------------------------------------------
@@ -10,11 +11,8 @@
 #------------------------------------------------------------------------------------------------------------------
 
 # Setup framework
-import sys
 import platform
 import locale
-import numpy as np 
-import matplotlib.pyplot as plt 
 from fmpy import simulate_fmu
 from fmpy import read_model_description
 
