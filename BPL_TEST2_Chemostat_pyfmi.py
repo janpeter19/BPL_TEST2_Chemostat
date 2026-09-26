@@ -1,15 +1,16 @@
-# Setup applicateion data BPL_TEST2_Chemostat_pyfmi 
+# Setup applicateion data BPL_TEST2_Chemostat_pyfmi
 # Author: Jan Peter Axelsson
-#------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------
 # 2026-08-25 - Created
 # 2026-08-25 - Added the user defined external function cstrProdMax
 # 2026-09-14 - Move definition of stateValue to the fmu_explore_pyfmi module ver 1.2.0
 # 2026-09-18 - Decrease the framework to what is necessary and move matlotlib to the other setup-file
-#------------------------------------------------------------------------------------------------------------------
+# 2026-09-26 - Change indentaiton from 3 spaces to 4 using black
+# ------------------------------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 #  Framework
-#------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 # Setup framework
 import platform
@@ -17,126 +18,122 @@ import locale
 from pyfmi import load_fmu
 
 # Set the environment - for Linux a JSON-file in the FMU is read
-if platform.system() == 'Linux': locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+if platform.system() == "Linux":
+    locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
-#------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 #  Setup application FMU
-#------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 # Provde the right FMU and load for different platforms in user dialogue:
-if platform.system() == 'Windows':
-   print('Windows - run FMU pre-compiled JModelica 2.14')
-   flag_vendor = 'JM'
-   flag_type = 'CS'
-   fmu_model ='BPL_TEST2_Chemostat_windows_jm_cs.fmu'        
-   model = load_fmu(fmu_model, log_level=0)  
-elif platform.system() == 'Linux': 
-   flag_vendor = 'OM'
-   flag_type = 'ME'
-   if flag_vendor in ['OM','om']:
-      print('Linux - run FMU pre-compiled OpenModelica') 
-      if flag_type in ['CS','cs']:         
-         fmu_model ='BPL_TEST2_Chemostat_linux_om_cs.fmu'    
-         model = load_fmu(fmu_model, log_level=0) 
-      if flag_type in ['ME','me']:         
-         fmu_model ='BPL_TEST2_Chemostat_linux_om_me.fmu'    
-#        fmu_model ='BPL_TEST2_Chemostat_linux_2404_om_me.fmu'   
-         model = load_fmu(fmu_model, log_level=7)
-   else:    
-      print('There is no FMU for this platform')
+if platform.system() == "Windows":
+    print("Windows - run FMU pre-compiled JModelica 2.14")
+    flag_vendor = "JM"
+    flag_type = "CS"
+    fmu_model = "BPL_TEST2_Chemostat_windows_jm_cs.fmu"
+    model = load_fmu(fmu_model, log_level=0)
+elif platform.system() == "Linux":
+    flag_vendor = "OM"
+    flag_type = "ME"
+    if flag_vendor in ["OM", "om"]:
+        print("Linux - run FMU pre-compiled OpenModelica")
+        if flag_type in ["CS", "cs"]:
+            fmu_model = "BPL_TEST2_Chemostat_linux_om_cs.fmu"
+            model = load_fmu(fmu_model, log_level=0)
+        if flag_type in ["ME", "me"]:
+            fmu_model = "BPL_TEST2_Chemostat_linux_om_me.fmu"
+            #        fmu_model ='BPL_TEST2_Chemostat_linux_2404_om_me.fmu'
+            model = load_fmu(fmu_model, log_level=7)
+    else:
+        print("There is no FMU for this platform")
 
 # Provide various opts-profiles
-if flag_type in ['CS', 'cs']:
-   opts_std = model.simulate_options()
-   opts_std['silent_mode'] = True
-   opts_std['ncp'] = 500 
-   opts_std['result_handling'] = 'binary'     
-elif flag_type in ['ME', 'me']:
-   opts_std = model.simulate_options()
-   opts_std["CVode_options"]["verbosity"] = 50 
-   opts_std['ncp'] = 500 
-   opts_std['result_handling'] = 'binary'  
-else:    
-   print('There is no FMU for this platform')
-  
+if flag_type in ["CS", "cs"]:
+    opts_std = model.simulate_options()
+    opts_std["silent_mode"] = True
+    opts_std["ncp"] = 500
+    opts_std["result_handling"] = "binary"
+elif flag_type in ["ME", "me"]:
+    opts_std = model.simulate_options()
+    opts_std["CVode_options"]["verbosity"] = 50
+    opts_std["ncp"] = 500
+    opts_std["result_handling"] = "binary"
+else:
+    print("There is no FMU for this platform")
+
 # Provide various MSL and BPL versions
-if flag_vendor in ['JM', 'jm']:
-   MSL_usage = model.get('MSL.usage')[0]
-   MSL_version = model.get('MSL.version')[0]
-   BPL_version = model.get('BPL.version')[0]
-elif flag_vendor in ['OM', 'om']:
-   MSL_usage = '4.1.0 - used components: RealInput, RealOutput, CombiTimeTable, Types' 
-   MSL_version = '4.1.0'
-   BPL_version = 'Bioprocess Library version 2.3.2' 
-else:    
-   print('There is no FMU for this platform')
+if flag_vendor in ["JM", "jm"]:
+    MSL_usage = model.get("MSL.usage")[0]
+    MSL_version = model.get("MSL.version")[0]
+    BPL_version = model.get("BPL.version")[0]
+elif flag_vendor in ["OM", "om"]:
+    MSL_usage = "4.1.0 - used components: RealInput, RealOutput, CombiTimeTable, Types"
+    MSL_version = "4.1.0"
+    BPL_version = "Bioprocess Library version 2.3.2"
+else:
+    print("There is no FMU for this platform")
 
 # Simulation time
 simulationTime = 60.0
 prevFinalTime = 0
 
 # Dictionary of time discrete states
-timeDiscreteStates = {} 
-
-# Create stateValue that later will be used to store final state and used for initialization in 'cont':
-stateValue =  {}
-stateValue = model.get_states_list()
-stateValue.update(timeDiscreteStates)
+timeDiscreteStates = {}
 
 # Define a minimal compoent list of the model as a starting point for describe('parts')
-component_list_minimum = ['bioreactor', 'bioreactor.culture']
+component_list_minimum = ["bioreactor", "bioreactor.culture"]
 
 # Provide process diagram on disk
-fmu_process_diagram ='BPL_TEST2_Chemostat_process_diagram_om.png'
+fmu_process_diagram = "BPL_TEST2_Chemostat_process_diagram_om.png"
 
-#------------------------------------------------------------------------------------------------------------------
-#  Specific application constructs: stateValue, parValue, parLocation, parCheck, diagrams, ax, lines
-#------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+#  Specific application constructs: parValue, parLocation, parCheck, diagrams, ax, lines
+# -------------------------------------------------------------------------------------------------
 
 # Create dictionaries parValue and parLocation
 parValue = {}
-parValue['V_start'] = 1.0
-parValue['VX_start'] = 1.0
-parValue['VS_start'] = 30.0
+parValue["V_start"] = 1.0
+parValue["VX_start"] = 1.0
+parValue["VS_start"] = 30.0
 
-parValue['Y'] = 0.5
-parValue['qSmax'] = 0.75
-parValue['Ks'] = 0.1
+parValue["Y"] = 0.5
+parValue["qSmax"] = 0.75
+parValue["Ks"] = 0.1
 
-parValue['S_in'] = 30.0
-parValue['feedtank.V_start'] = 100.0
+parValue["S_in"] = 30.0
+parValue["feedtank.V_start"] = 100.0
 
-parValue['t0'] = 0.0
-parValue['F0'] = 0.0
-parValue['t1'] = 10.0
-parValue['F1'] = 0.20
-parValue['t2'] = 999.0
-parValue['F2'] = 0.20
-parValue['t3'] = 1000.0
-parValue['F3'] = 0.20
+parValue["t0"] = 0.0
+parValue["F0"] = 0.0
+parValue["t1"] = 10.0
+parValue["F1"] = 0.20
+parValue["t2"] = 999.0
+parValue["F2"] = 0.20
+parValue["t3"] = 1000.0
+parValue["F3"] = 0.20
 
 parLocation = {}
-parLocation['V_start'] = 'bioreactor.V_start'
-parLocation['VX_start'] = 'bioreactor.m_start[1]' 
-parLocation['VS_start'] = 'bioreactor.m_start[2]' 
+parLocation["V_start"] = "bioreactor.V_start"
+parLocation["VX_start"] = "bioreactor.m_start[1]"
+parLocation["VS_start"] = "bioreactor.m_start[2]"
 
-parLocation['Y'] = 'bioreactor.culture.Y'
-parLocation['qSmax'] = 'bioreactor.culture.qSmax'
-parLocation['Ks'] = 'bioreactor.culture.Ks'
+parLocation["Y"] = "bioreactor.culture.Y"
+parLocation["qSmax"] = "bioreactor.culture.qSmax"
+parLocation["Ks"] = "bioreactor.culture.Ks"
 
-parLocation['S_in'] = 'feedtank.c_in[2]'
-parLocation['feedtank.V_start'] = 'feedtank.V_start'
-parLocation['t0'] = 'schemePumps.table[1,1]'
-parLocation['F0'] = 'schemePumps.table[1,2]'
-parLocation['t1'] = 'schemePumps.table[2,1]'
-parLocation['F1'] = 'schemePumps.table[2,2]'
-parLocation['t2'] = 'schemePumps.table[3,1]'
-parLocation['F2'] = 'schemePumps.table[3,2]'
-parLocation['t3'] = 'schemePumps.table[4,1]'
-parLocation['F3'] = 'schemePumps.table[4,2]'
+parLocation["S_in"] = "feedtank.c_in[2]"
+parLocation["feedtank.V_start"] = "feedtank.V_start"
+parLocation["t0"] = "schemePumps.table[1,1]"
+parLocation["F0"] = "schemePumps.table[1,2]"
+parLocation["t1"] = "schemePumps.table[2,1]"
+parLocation["F1"] = "schemePumps.table[2,2]"
+parLocation["t2"] = "schemePumps.table[3,1]"
+parLocation["F2"] = "schemePumps.table[3,2]"
+parLocation["t3"] = "schemePumps.table[4,1]"
+parLocation["F3"] = "schemePumps.table[4,2]"
 
 # Extra for describe()
-parLocation['mu'] = 'bioreactor.culture.mu'
+parLocation["mu"] = "bioreactor.culture.mu"
 
 # Parameter value check - especially for hysteresis to avoid runtime error
 parCheck = []
@@ -156,17 +153,18 @@ diagrams = []
 ax = []
 
 # Create list of pens for the diagrams
-lines = ['-','--',':','-.']
+lines = ["-", "--", ":", "-."]
 
-#------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 #  Specific application constructs: external function
-#------------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
 
 # Define maximal performance criteria
 def cstrProdMax(model=model):
-   """Calculate from the model maximal chemostat productivity FX_max"""        
-   X_max = model.get('bioreactor.culture.Y')*model.get('feedtank.c_in[2]')        
-   mu_max = model.get('bioreactor.culture.Y')*model.get('bioreactor.culture.qSmax')
-   V_nom = model.get('bioreactor.V_start')
-   FX_max = mu_max*X_max*V_nom      
-   return FX_max[0]
+    """Calculate from the model maximal chemostat productivity FX_max"""
+    X_max = model.get("bioreactor.culture.Y") * model.get("feedtank.c_in[2]")
+    mu_max = model.get("bioreactor.culture.Y") * model.get("bioreactor.culture.qSmax")
+    V_nom = model.get("bioreactor.V_start")
+    FX_max = mu_max * X_max * V_nom
+    return FX_max[0]
