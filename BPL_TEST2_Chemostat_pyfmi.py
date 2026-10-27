@@ -75,7 +75,6 @@ else:
 
 # Simulation time
 simulationTime = 60.0
-prevFinalTime = 0
 
 # Dictionary of time discrete states
 timeDiscreteStates = {}
