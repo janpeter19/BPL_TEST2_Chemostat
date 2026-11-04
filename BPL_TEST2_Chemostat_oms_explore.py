@@ -74,7 +74,7 @@ def newplot(title="Chemostat cultivation", plotType="TimeSeries"):
         )
         #      diagrams.append("ax[2].plot([0, simulationTime], [cstrProdMax(), cstrProdMax()], color='r',linestyle=linetype)")
         diagrams.append("ax[2].legend(['FX','FX_max'])")
-        diagrams.append("ax[3].plot(t,sim_res['D'],color='b',linestyle=linetype)")
+        diagrams.append("ax[3].plot(t,sim_res['Chemostat.D'],color='b',linestyle=linetype)")
         diagrams.append(
             "ax[3].plot(t,sim_res['Chemostat.bioreactor.culture.q[1]'],color='r',linestyle=linetype)"
         )
@@ -132,7 +132,7 @@ def newplot(title="Chemostat cultivation", plotType="TimeSeries"):
             "ax[3].plot([0, simulationTime], [cstrProdMax(model), cstrProdMax(model)], color='r',linestyle=linetype)"
         )
         diagrams.append("ax[3].legend(['FX','FX_max'])")
-        diagrams.append("ax[4].plot(t,sim_res['D'],color='b',linestyle=linetype)")
+        diagrams.append("ax[4].plot(t,sim_res['Chemostat.D'],color='b',linestyle=linetype)")
         diagrams.append(
             "ax[4].plot(t,sim_res['Chemostat.bioreactor.culture.q[1]'],color='r',linestyle=linetype)"
         )
@@ -186,7 +186,7 @@ def newplot(title="Chemostat cultivation", plotType="TimeSeries"):
         )
         diagrams.append("ax31.legend(['FX','FX_max'])")
         diagrams.append(
-            "ax41.plot(sim_res['time'],sim_res['D'],color='b',linestyle=linetype)"
+            "ax41.plot(sim_res['time'],sim_res['Chemostat.D'],color='b',linestyle=linetype)"
         )
         diagrams.append(
             "ax41.plot(sim_res['time'],sim_res['Chemostat.bioreactor.culture.q[1]'],color='r',linestyle=linetype)"
@@ -227,7 +227,7 @@ def newplot(title="Chemostat cultivation", plotType="TimeSeries"):
             "ax2.plot(sim_res['time'],sim_res['Chemostat.bioreactor.c[1]'],color='b',linestyle=linetype)"
         )
         diagrams.append(
-            "ax3.plot(sim_res['time'],sim_res['D'],color='b',linestyle=linetype)"
+            "ax3.plot(sim_res['time'],sim_res['Chemostat.D'],color='b',linestyle=linetype)"
         )
         diagrams.append(
             "ax3.plot(sim_res['time'],sim_res['Chemostat.bioreactor.culture.q[1]'],color='r',linestyle=linetype)"
@@ -298,7 +298,7 @@ def newplot(title="Chemostat cultivation", plotType="TimeSeries"):
             "ax31.plot(sim_res['time'],sim_res['Chemostat.bioreactor.c[1]'],color='b',linestyle=linetype)"
         )
         diagrams.append(
-            "ax41.plot(sim_res['time'],sim_res['D'],color='b',linestyle=linetype)"
+            "ax41.plot(sim_res['time'],sim_res['Chemostat.D'],color='b',linestyle=linetype)"
         )
         diagrams.append(
             "ax41.plot(sim_res['time'],sim_res['Chemostat.bioreactor.culture.q[1]'],color='r',linestyle=linetype)"
