@@ -10,8 +10,7 @@ You start up the notebook in Colab by pressing here
 or alternatively
 [start BPL notebook with FMPy](https://colab.research.google.com/github/janpeter19/BPL_TEST2_Chemostat/blob/main/BPL_TEST2_Chemostat_fmpy_colab.ipynb)
 or alternatively (experimentally)
-[start BPL notebook with OMSimulator]
-(https://colab.research.google.com/github/janpeter19/BPL_TEST2_Chemostat/blob/main/BPL_TEST2_Chemostat_oms_colab.ipynb).
+[start BPL notebook with OMSimulator](https://colab.research.google.com/github/janpeter19/BPL_TEST2_Chemostat/blob/main/BPL_TEST2_Chemostat_oms_colab.ipynb).
 
 Then you in the menu choose Runtime/Run all. 
 
