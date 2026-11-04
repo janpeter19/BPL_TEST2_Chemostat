@@ -50,7 +50,6 @@ elif platform.system() == "Linux":
 options = []
 
 # Provide various MSL and BPL versions
-
 if flag_vendor in ["OM", "om"]:
     MSL_usage = "4.1.0 - used components: RealInput, RealOutput, CombiTimeTable, Types"
     MSL_version = "4.1.0"
